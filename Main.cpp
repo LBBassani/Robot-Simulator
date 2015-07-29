@@ -3,6 +3,7 @@
 #include "Timer.h"
 #include "WindowCallBacks.h"
 #include "GLDraw.h"
+#include <GL/glut.h>
 
 #define TIME_STEP 20
 using namespace std;
@@ -12,8 +13,11 @@ int
 main( int argc, char ** argv )
 {
     window *w = new window();
+    glutInit( &argc, argv );
+    initGl();
+
     long lastTime = getCurrentTime();
-    long currentTime = getCurrentTime();
+    long currentTime = lastTime;
 
     while(true)
 	{
