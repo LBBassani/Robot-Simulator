@@ -13,6 +13,8 @@ int
 main( int argc, char ** argv )
 {
     window *w = new window();
+    w->initializeWindow();
+
     glutInit( &argc, argv );
     initGl();
 

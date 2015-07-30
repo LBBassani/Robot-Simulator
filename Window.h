@@ -16,10 +16,25 @@ private:
 	Display* g_pDisplay;
 	Window g_window;
 	int g_bDoubleBuffered;
+
+	XSetWindowAttributes windowAttributes;
+	XVisualInfo *visualInfo = NULL;
+	Colormap colorMap;
+	GLXContext glxContext;
+	int errorBase;
+	int eventBase;
+
+	void checkForGLXSupport();
+	bool openXServerConnection();
+	bool tryDoubleBufferedVisual();
+	bool trySingleBufferedVisual();
+
+
 public:
 	window();
+	void initializeWindow();
 	void showWindow();
-	~window(){	}
+	~window(){}
 	bool processWindow(void (*mouseFunc)(int type, int button, int x, int y),
                       void (*keyPress)(int code), void (*keyRelease)(int code));
 };
