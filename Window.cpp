@@ -4,6 +4,8 @@
 window::window()
 {
 	g_bDoubleBuffered = GL_FALSE;
+	initialize();
+	open();
 }
 
 
@@ -82,7 +84,52 @@ window::trySingleBufferedVisual()
 
 /*----------------------------------------------------------------------------*/
 void
-window::initializeWindow()
+window::createOpenGLRenderingContext()
+{
+	glxContext = glXCreateContext( g_pDisplay,
+								visualInfo,
+								NULL,      // No sharing of display lists
+								GL_TRUE ); // Direct rendering if possible
+
+	if( glxContext == NULL )
+	{
+		// TODO return an error code instead of exit.
+		fprintf(stderr, "glxsimple: %s\n", "could not create rendering context");
+		exit(1);
+	}
+}
+
+
+
+
+/*----------------------------------------------------------------------------*/
+void
+window::createXColorMap()
+{
+	colorMap = XCreateColormap( g_pDisplay,
+								RootWindow(g_pDisplay, visualInfo->screen),
+								visualInfo->visual,
+								AllocNone );
+
+	windowAttributes.colormap     = colorMap;
+	windowAttributes.border_pixel = 0;
+	windowAttributes.event_mask   = ExposureMask           |
+									VisibilityChangeMask   |
+									KeyPressMask           |
+									KeyReleaseMask         |
+									ButtonPressMask        |
+									ButtonReleaseMask      |
+									PointerMotionMask      |
+									StructureNotifyMask    |
+									SubstructureNotifyMask |
+									FocusChangeMask;
+}
+
+
+
+/*----------------------------------------------------------------------------*/
+void
+window::initialize()
 {
 	bool success = openXServerConnection();
 
@@ -97,11 +144,6 @@ window::initializeWindow()
 		}
 		else
 		{
-			/*
-			If we can't find a double-bufferd visual,
-			try for a single-buffered visual...
-			*/
-
 			g_bDoubleBuffered = GL_FALSE;
 			bool successOnDoubleBufferedVisual = trySingleBufferedVisual();
 
@@ -114,37 +156,8 @@ window::initializeWindow()
 			}
 		}
 
-		// Create an OpenGL rendering context
-		glxContext = glXCreateContext( g_pDisplay,
-									visualInfo,
-									NULL,      // No sharing of display lists
-									GL_TRUE ); // Direct rendering if possible
-
-		if( glxContext == NULL )
-		{
-			// TODO return an error code instead of exit.
-			fprintf(stderr, "glxsimple: %s\n", "could not create rendering context");
-			exit(1);
-		}
-
-		// Create an X colormap since we're probably not using the default visual
-		colorMap = XCreateColormap( g_pDisplay,
-									RootWindow(g_pDisplay, visualInfo->screen),
-									visualInfo->visual,
-									AllocNone );
-
-		windowAttributes.colormap     = colorMap;
-		windowAttributes.border_pixel = 0;
-		windowAttributes.event_mask   = ExposureMask           |
-										VisibilityChangeMask   |
-										KeyPressMask           |
-										KeyReleaseMask         |
-										ButtonPressMask        |
-										ButtonReleaseMask      |
-										PointerMotionMask      |
-										StructureNotifyMask    |
-										SubstructureNotifyMask |
-										FocusChangeMask;
+		createOpenGLRenderingContext();
+		createXColorMap();
 
 		// Create an X window with the selected visual
 		g_window = XCreateWindow( g_pDisplay,
@@ -184,9 +197,17 @@ window::initializeWindow()
 
 
 /*----------------------------------------------------------------------------*/
+void
+window::open()
+{
+	XMapWindow( g_pDisplay, g_window );
+}
+
+
+
+/*----------------------------------------------------------------------------*/
 bool
-window::processWindow(
-                     void ( * mouseFunc )( int type, int button, int x, int y ),
+window::process( void ( * mouseFunc )( int type, int button, int x, int y ),
                 void ( * keyPress )(int code), void ( * keyRelease )(int code) )
 {
 	XEvent event;
@@ -247,7 +268,7 @@ window::processWindow(
 
 /*----------------------------------------------------------------------------*/
 void
-window::showWindow()
+window::update()
 {
 	if( g_bDoubleBuffered )
 	{

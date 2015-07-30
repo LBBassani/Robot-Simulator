@@ -29,13 +29,16 @@ private:
 	bool tryDoubleBufferedVisual();
 	bool trySingleBufferedVisual();
 
+	void createOpenGLRenderingContext();
+	void createXColorMap();
 
 public:
 	window();
-	void initializeWindow();
-	void showWindow();
+	void initialize();
+	void open();
+	void update();
 	~window(){}
-	bool processWindow(void (*mouseFunc)(int type, int button, int x, int y),
+	bool process(void (*mouseFunc)(int type, int button, int x, int y),
                       void (*keyPress)(int code), void (*keyRelease)(int code));
 };
 

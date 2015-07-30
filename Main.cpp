@@ -13,7 +13,6 @@ int
 main( int argc, char ** argv )
 {
     window *w = new window();
-    w->initializeWindow();
 
     glutInit( &argc, argv );
     initGl();
@@ -24,8 +23,9 @@ main( int argc, char ** argv )
     while(true)
 	{
         currentTime = getCurrentTime();
-		w->showWindow();
-		if( !w->processWindow(mouseFunc, keyPress, keyRelease) )
+		w->update();
+
+		if( !w->process(mouseFunc, keyPress, keyRelease) )
 		{
 			break;
 		}
