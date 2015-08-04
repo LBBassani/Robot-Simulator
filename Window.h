@@ -39,7 +39,7 @@ public:
 	void update();
 	~window(){}
 	bool process(void (*mouseFunc)(int type, int button, int x, int y),
-                      void (*keyPress)(int code), void (*keyRelease)(int code));
+	                  void (*keyPress)(int code), void (*keyRelease)(int code));
 };
 
 window* initWindow();
