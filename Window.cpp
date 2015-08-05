@@ -1,4 +1,7 @@
 #include "Window.h"
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>		/* BitmapOpenFailed, etc.    */
+#include <X11/cursorfont.h>	/* pre-defined crusor shapes */
 
 /*----------------------------------------------------------------------------*/
 window::window()
@@ -185,6 +188,16 @@ window::initialize()
 
 		// Request the X window to be displayed on the screen
 		XMapWindow( g_pDisplay, g_window );
+
+		Cursor font_cursor,		/* handles for the cursors we will create.   */
+		icon_cursor;
+
+		/* create a 'watch' cursor. */
+	    font_cursor = XCreateFontCursor(g_pDisplay, 62);
+	    /* attach this cursor to our window. */
+	    XDefineCursor(g_pDisplay, g_window, font_cursor);
+	    XSync(g_pDisplay, False);
+
 	}
 	else
 	{

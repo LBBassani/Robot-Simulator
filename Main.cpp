@@ -24,6 +24,7 @@ main( int argc, char ** argv )
         currentTime = getCurrentTime();
 		w->update();
 
+
 		if( !w->process( mouseFunc, keyPress, keyRelease ) )
 		{
 			break;

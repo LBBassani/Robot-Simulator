@@ -9,13 +9,17 @@
 
 using namespace std;
 
+extern int mousex, mousey;
+
 #define BLACK (0, 0, 0)
 #define RED (1, 0, 0)
+#define BLUE (0, 0, 1)
 
 /*----------------------------------------------------------------------------*/
 void
 initGl()
 {
+    
 }
 
 
@@ -28,7 +32,7 @@ drawText(float x, float y, const char * const msg, ...)
 
     len = strlen(msg);
     glRasterPos2f(x, y);
-
+    glColor3f BLUE;
     for( i=0; i < len; i++)
     {
             glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, msg[i]);
@@ -216,15 +220,14 @@ drawAll()
 {
     glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
     glClear (GL_COLOR_BUFFER_BIT);
-    glScalef(0.03,0.03,0.03);
-    //drawRectangle(10,1,-10,-5);
+    glScalef(0.01,0.01,0.01);
+
     //drawLine(2,-2,-2,2);
     //drawCurve(0, 2*M_PI, 200, sint, cost);
 
-    //const char * const str = "Hello world!!!";
-    //drawText(3, 3, str);
-
     drawFromFile((char*)"teste.txt");
+    const char * const str = "Mouse";
+    drawRectangle(3,3,mousex,mousey);
 
     glLoadIdentity();
 }
