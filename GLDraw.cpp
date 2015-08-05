@@ -19,7 +19,7 @@ extern int mousex, mousey;
 void
 initGl()
 {
-    
+
 }
 
 
@@ -35,7 +35,7 @@ drawText(float x, float y, const char * const msg, ...)
     glColor3f BLUE;
     for( i=0; i < len; i++)
     {
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, msg[i]);
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, msg[i]);
     }
 }
 
@@ -47,10 +47,10 @@ drawRectangle(float w, float h, float x, float y)
 {
     float x1, x2, y1, y2;
 
-    x1 = x-w/2.0;
-    y1 = y+h/2.0;
-    x2 = x+w/2.0;
-    y2 = y-h/2.0;
+    x1 = -w/2.0;
+    y1 = h/2.0;
+    x2 = w/2.0;
+    y2 = -h/2.0;
 
     glBegin(GL_QUADS);
     glVertex3f(x1,y1,0);
@@ -66,8 +66,8 @@ drawRectangle(float w, float h, float x, float y)
 void
 drawLine(float x1, float y1, float x2, float y2)
 {
-    glBegin(GL_LINES);
     glColor3f BLACK;
+    glBegin(GL_LINES);
     glVertex3f(x1,y1,0);
     glVertex3f(x2,y2,0);
     glEnd();
@@ -126,7 +126,8 @@ int extractInt( char * msg, int * consumed )
 
 
 /*----------------------------------------------------------------------------*/
-int extractDouble( char * msg, int * consumed )
+static double
+extractDouble( char * msg, int * consumed )
 {
     int x;
 
@@ -153,52 +154,75 @@ int extractDouble( char * msg, int * consumed )
 void
 drawEncodedForm( char * msg )
 {
-    int x, y;
+    double x, y;
     int consumed = 0;
     char command = msg[0];
 
     msg++;
 
-    x = extractInt(msg, &consumed );
+    x = extractDouble(msg, &consumed );
     msg += consumed;
     //std::cout << x << "\n";
-    y = extractInt(msg, &consumed );
+    y = extractDouble(msg, &consumed );
     msg += consumed;
     //std::cout << y << "\n\n";
 
     glColor3f BLACK;
-    glTranslated(x,y,0);
+
     switch ( command )
     {
         case 'c':
         {
+            glTranslated(x,y,0);
             double factor = extractDouble(msg, &consumed );
             msg += consumed;
+            //printf("Factor = %lf\n", factor);
             drawCurve(0, 2*M_PI, 100, sint, cost, factor);
+            glTranslated(-x,-y,0);
             break;
         }
         case 'l':
         {
             // to draw lines
+            glColor3f BLUE;
+
+            double xf, yf;
+            xf = extractDouble(msg, &consumed );
+            msg += consumed;
+            //std::cout << xf << "\n";
+            yf = extractDouble(msg, &consumed );
+            msg += consumed;
+            //std::cout << yf << "\n\n";
+            drawLine(x,y,xf,yf);
+
             break;
         }
         case 'r':
         {
             glColor3f RED;
+            glTranslated(x,y,0);
+
             double w = extractDouble(msg, &consumed );
             msg += consumed;
             double h = extractDouble(msg, &consumed );
             msg += consumed;
+            //cout << "w = " << w << "\n";
+            //cout << "h = " << h << "\n\n";
             drawRectangle(w, h, x, y);
+
+            glTranslated(-x,-y,0);
+
             break;
         }
     }
-    glTranslated(-x,-y,0);
+
 
 
 }
 
 
+
+/*----------------------------------------------------------------------------*/
 void drawFromFile(char * filename)
 {
 
@@ -214,20 +238,22 @@ void drawFromFile(char * filename)
     fclose(fp);
 }
 
+
+
 /*----------------------------------------------------------------------------*/
 void
 drawAll()
 {
     glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
     glClear (GL_COLOR_BUFFER_BIT);
-    glScalef(0.01,0.01,0.01);
+    glScalef(0.005,0.005,0.005);
 
     //drawLine(2,-2,-2,2);
     //drawCurve(0, 2*M_PI, 200, sint, cost);
 
     drawFromFile((char*)"teste.txt");
-    const char * const str = "Mouse";
-    drawRectangle(3,3,mousex,mousey);
+    //const char * const str = "Mouse";
+    //drawRectangle(3,3,mousex,mousey);
 
     glLoadIdentity();
 }
