@@ -193,7 +193,7 @@ window::initialize()
 		icon_cursor;
 
 		/* create a 'watch' cursor. */
-	    font_cursor = XCreateFontCursor(g_pDisplay, 62);
+	    font_cursor = XCreateFontCursor(g_pDisplay, XC_sailboat);
 	    /* attach this cursor to our window. */
 	    XDefineCursor(g_pDisplay, g_window, font_cursor);
 	    XSync(g_pDisplay, False);
