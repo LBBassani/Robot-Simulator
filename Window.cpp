@@ -163,7 +163,7 @@ window::initialize()
 		g_window = XCreateWindow( g_pDisplay,
 								RootWindow(g_pDisplay, visualInfo->screen),
 								0, 0,     // x/y position of top-left outside corner of the window
-								800, 800, // Width and height of window
+								600, 600, // Width and height of window
 								0,        // Border width
 								visualInfo->depth,
 								InputOutput,
