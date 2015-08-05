@@ -2,6 +2,7 @@
 #define GLDRAW_H
 
 #include <stdarg.h>
+#include <string>
 
 void initGl();
 void drawText(float x, float y, char * msg, ...);

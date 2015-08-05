@@ -2,11 +2,15 @@
 #include <stdlib.h>
 #include <GL/glut.h>
 #include <string.h>
+#include <string>
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
 
+using namespace std;
+
 #define BLACK (0, 0, 0)
+#define RED (1, 0, 0)
 
 /*----------------------------------------------------------------------------*/
 void
@@ -44,7 +48,6 @@ drawRectangle(float w, float h, float x, float y)
     x2 = x+w/2.0;
     y2 = y-h/2.0;
 
-    glColor3f BLACK;
     glBegin(GL_QUADS);
     glVertex3f(x1,y1,0);
     glVertex3f(x2,y1,0);
@@ -71,7 +74,7 @@ drawLine(float x1, float y1, float x2, float y2)
 /*----------------------------------------------------------------------------*/
 void
 drawCurve(float t0, float tf, int nPoints, double ( * fx )(double),
-                                                       double ( * fy )(double) )
+                                        double ( * fy )(double), double factor )
 {
     if (nPoints > 1)
     {
@@ -81,14 +84,15 @@ drawCurve(float t0, float tf, int nPoints, double ( * fx )(double),
 
         for(double i = 1; i <= nPoints; ++i, currentT+=delta )
         {
-            drawLine(fx(previousT), fy(previousT), fx(currentT), fy(currentT) );
+            drawLine(factor*fx(previousT), factor*fy(previousT),
+                                     factor*fx(currentT), factor*fy(currentT) );
             previousT = currentT;
         }
     }
 }
 
-double sint(double x){return 10*sin(x);}
-double cost(double x){return 10*cos(x);}
+double sint(double x){return sin(x);}
+double cost(double x){return cos(x);}
 
 
 
@@ -118,6 +122,30 @@ int extractInt( char * msg, int * consumed )
 
 
 /*----------------------------------------------------------------------------*/
+int extractDouble( char * msg, int * consumed )
+{
+    int x;
+
+    char buf[64];
+    int bufSz = 0;
+
+    *consumed = 0;
+    // find separator
+    while ( msg[*consumed] != 's' )
+    {
+        buf[bufSz++] = msg[*consumed];
+        (*consumed)++;
+    }
+
+    (*consumed)++; // 's' must be ignored on next iteration
+
+    buf[bufSz++] = '\0';
+
+    return  atof(buf);
+}
+
+
+/*----------------------------------------------------------------------------*/
 void
 drawEncodedForm( char * msg )
 {
@@ -128,39 +156,59 @@ drawEncodedForm( char * msg )
     msg++;
 
     x = extractInt(msg, &consumed );
+    msg += consumed;
     //std::cout << x << "\n";
-    y = extractInt(msg + consumed, &consumed );
+    y = extractInt(msg, &consumed );
+    msg += consumed;
     //std::cout << y << "\n\n";
 
+    glColor3f BLACK;
+    glTranslated(x,y,0);
     switch ( command )
     {
         case 'c':
         {
-            msg++;
-            glColor3f BLACK;
-            glTranslated(x,y,0);
-            drawCurve(0, 2*M_PI, 200, sint, cost);
-            glTranslated(-x,-y,0);
+            double factor = extractDouble(msg, &consumed );
+            msg += consumed;
+            drawCurve(0, 2*M_PI, 100, sint, cost, factor);
             break;
         }
         case 'l':
         {
-            msg++;
             // to draw lines
             break;
         }
         case 'r':
         {
-            msg++;
-            drawRectangle(10, 10, x, y);
+            glColor3f RED;
+            double w = extractDouble(msg, &consumed );
+            msg += consumed;
+            double h = extractDouble(msg, &consumed );
+            msg += consumed;
+            drawRectangle(w, h, x, y);
             break;
         }
     }
+    glTranslated(-x,-y,0);
 
 
 }
 
 
+void drawFromFile(char * filename)
+{
+
+    // essa funcao causa seg fault
+    FILE *fp = fopen(filename,"r");
+    char buffer[1024];
+    while (!feof(fp))
+    {
+        fscanf(fp, "%s", buffer);
+        drawEncodedForm(buffer);
+    }
+
+    fclose(fp);
+}
 
 /*----------------------------------------------------------------------------*/
 void
@@ -175,7 +223,8 @@ drawAll()
 
     //const char * const str = "Hello world!!!";
     //drawText(3, 3, str);
-    drawEncodedForm("c5s5s");
+
+    drawFromFile((char*)"teste.txt");
 
     glLoadIdentity();
 }
