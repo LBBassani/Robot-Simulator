@@ -95,8 +95,8 @@ drawCurve(float t0, float tf, int nPoints, double ( * fx )(double),
     }
 }
 
-double sint(double x){return sin(x);}
-double cost(double x){return cos(x);}
+double sint(double x){return sin(x) + 1;}
+double cost(double x){return cos(x) + 1;}
 
 
 
@@ -225,9 +225,13 @@ drawEncodedForm( char * msg )
 /*----------------------------------------------------------------------------*/
 void drawFromFile(char * filename)
 {
-
-    // essa funcao causa seg fault
     FILE *fp = fopen(filename,"r");
+
+    if(fp == NULL)
+    {
+        return;
+    }
+
     char buffer[1024];
     while (!feof(fp))
     {
@@ -246,14 +250,14 @@ drawAll()
 {
     glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
     glClear (GL_COLOR_BUFFER_BIT);
-    glScalef(0.005,0.005,0.005);
+    glScalef(0.05,0.05,0.05);
 
-    //drawLine(2,-2,-2,2);
-    //drawCurve(0, 2*M_PI, 200, sint, cost);
+    drawLine(2,-2,-2,2);
+    drawCurve(0, 2*M_PI, 200, sint, cost, 3);
 
     drawFromFile((char*)"teste.txt");
     //const char * const str = "Mouse";
-    //drawRectangle(3,3,mousex,mousey);
+    drawRectangle(3,3,mousex,mousey);
 
     glLoadIdentity();
 }

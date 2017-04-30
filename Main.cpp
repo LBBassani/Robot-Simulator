@@ -6,7 +6,7 @@
 #include <GL/glut.h>
 
 #define TIME_STEP 20
-using namespace std;
+//using namespace std;
 
 /*----------------------------------------------------------------------------*/
 int
