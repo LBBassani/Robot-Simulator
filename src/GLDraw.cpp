@@ -95,8 +95,8 @@ drawCurve(float t0, float tf, int nPoints, double ( * fx )(double),
     }
 }
 
-double sint(double x){return sin(x) + 1;}
-double cost(double x){return cos(x) + 1;}
+double sint(double x){return sin(x);}
+double cost(double x){return cos(x);}
 
 
 

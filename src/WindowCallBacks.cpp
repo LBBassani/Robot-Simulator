@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 const int ESC_KEY = 9;
 int mousex, mousey;
 
@@ -18,9 +19,11 @@ processLogic()
 void
 mouseFunc(int type, int button, int x, int y)
 {
+#ifdef KEY_AND_MOUSE_EVENT_VERBOSE
 	printf("mouse - type: %d, button: %d, x: %d, y: %d\n", type, button, x, y);
-	mousex = -100+x/3;
-	mousey = 100-y/3;
+#endif
+	mousex = x;
+	mousey = y;
 }
 
 
@@ -29,7 +32,10 @@ mouseFunc(int type, int button, int x, int y)
 void
 keyPress(int code)
 {
+#ifdef KEY_AND_MOUSE_EVENT_VERBOSE
 	printf("key: %d, type: press\n", code);
+#endif
+
 	if( ESC_KEY == code )
 	{
 		exit(0);
@@ -42,5 +48,7 @@ keyPress(int code)
 void
 keyRelease(int code)
 {
+#ifdef KEY_AND_MOUSE_EVENT_VERBOSE
 	printf("key: %d, type: release\n", code);
+#endif
 }

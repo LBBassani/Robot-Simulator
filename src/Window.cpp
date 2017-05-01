@@ -35,15 +35,15 @@ window::openXServerConnection()
 
 
 /*----------------------------------------------------------------------------*/
-void
+bool
 window::checkForGLXSupport()
 {
-	if( !glXQueryExtension( g_pDisplay, &errorBase, &eventBase ) )
+	bool status =  glXQueryExtension( g_pDisplay, &errorBase, &eventBase );
+    if(!status)
 	{
-		// TODO return an error code instead of exit.
 		fprintf(stderr, "glxsimple: %s\n", "X server has no OpenGL GLX extension");
-		exit(1);
 	}
+    return status;
 }
 
 
@@ -138,7 +138,7 @@ window::initialize()
 
 	if (success)
 	{
-		checkForGLXSupport();
+		if(!checkForGLXSupport()) return;
 		bool successOnDoubleBufferedVisual = tryDoubleBufferedVisual();
 
 		if( successOnDoubleBufferedVisual )

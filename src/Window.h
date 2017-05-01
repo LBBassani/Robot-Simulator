@@ -24,7 +24,7 @@ private:
 	int errorBase;
 	int eventBase;
 
-	void checkForGLXSupport();
+	bool checkForGLXSupport();
 	bool openXServerConnection();
 	bool tryDoubleBufferedVisual();
 	bool trySingleBufferedVisual();
