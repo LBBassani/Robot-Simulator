@@ -12,10 +12,6 @@ Field::Field(double xSize, double ySize, double xCenter, double yCenter)
 void
 Field::draw()
 {
-    static float theta = 0;
     drawRectangle(xLen, yLen, xC, yC, 0, false);
-    if(theta > 2*M_PI)
-    {
-        theta = 0.0;
-    }
+    drawCurve(0, 2*M_PI, 60, cos, sin, 0.2 );
 }
