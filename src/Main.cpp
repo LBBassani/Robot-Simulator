@@ -12,7 +12,9 @@
 int
 main( int argc, char ** argv )
 {
-    window *w = new window();
+    double width = 600;
+    double height = 600;
+    window *w = new window(width, height);
     glutInit( &argc, argv );
     initGl();
 

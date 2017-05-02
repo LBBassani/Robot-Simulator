@@ -4,8 +4,10 @@
 #include <X11/cursorfont.h>	/* pre-defined crusor shapes */
 
 /*----------------------------------------------------------------------------*/
-window::window()
+window::window(int w, int h)
 {
+    width = w;
+    height = h;
 	g_bDoubleBuffered = GL_FALSE;
 	initialize();
 	open();
@@ -153,8 +155,7 @@ window::initialize()
 			if( !successOnDoubleBufferedVisual )
 			{
 				// TODO return an error code instead of exit.
-				fprintf(stderr,
-						  "glxsimple: %s\n", "no RGB visual with depth buffer");
+				fprintf(stderr, "glxsimple: %s\n", "no RGB visual with depth buffer");
 				exit(1);
 			}
 		}
@@ -165,8 +166,8 @@ window::initialize()
 		// Create an X window with the selected visual
 		g_window = XCreateWindow( g_pDisplay,
 								RootWindow(g_pDisplay, visualInfo->screen),
-								0, 0,     // x/y position of top-left outside corner of the window
-								600, 600, // Width and height of window
+								0,0,     // x/y position of top-left outside corner of the window
+								width, height, // Width and height of window
 								0,        // Border width
 								visualInfo->depth,
 								InputOutput,
@@ -253,8 +254,8 @@ window::process( void ( * mouseFunc )( int type, int button, int x, int y ),
 
 				int type =  mouseEvent->type;
 				int button = mouseEvent->button;
-				int x = mouseEvent->x;
-				int y = mouseEvent->y;
+				int x = mouseEvent->x - width/ 2;
+				int y = mouseEvent->y - height/2;
 
 				mouseFunc(type, button, x, y);
                 break;

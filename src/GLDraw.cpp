@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
+#include "Field.h"
 
 using namespace std;
 
@@ -43,27 +44,6 @@ drawText(float x, float y, const char * const msg, ...)
 
 /*----------------------------------------------------------------------------*/
 void
-drawRectangle(float w, float h, float x, float y)
-{
-    float x1, x2, y1, y2;
-
-    x1 = -w/2.0;
-    y1 = h/2.0;
-    x2 = w/2.0;
-    y2 = -h/2.0;
-
-    glBegin(GL_QUADS);
-    glVertex3f(x1,y1,0);
-    glVertex3f(x2,y1,0);
-    glVertex3f(x2,y2,0);
-    glVertex3f(x1,y2,0);
-    glEnd();
-}
-
-
-
-/*----------------------------------------------------------------------------*/
-void
 drawLine(float x1, float y1, float x2, float y2)
 {
     glColor3f BLACK;
@@ -73,6 +53,42 @@ drawLine(float x1, float y1, float x2, float y2)
     glEnd();
 }
 
+
+
+/*----------------------------------------------------------------------------*/
+void
+drawRectangle(float w, float h, float x, float y, float theta, bool fill)
+{
+    float x1, x2, y1, y2;
+
+    x1 = -w/2.0;
+    y1 = h/2.0;
+    x2 = w/2.0;
+    y2 = -h/2.0;
+
+    glPushMatrix();
+
+    glTranslatef(x,y, 0);
+    glRotatef(180*theta/M_PI, 0,0,1);
+
+    glColor3f BLACK;
+    if(fill)
+    {
+        glBegin(GL_QUADS);
+    }
+    else
+    {
+        glBegin(GL_LINE_LOOP);
+    }
+
+    glVertex3f(x1,y1,0);
+    glVertex3f(x2,y1,0);
+    glVertex3f(x2,y2,0);
+    glVertex3f(x1,y2,0);
+    glEnd();
+    glPopMatrix();
+
+}
 
 
 /*----------------------------------------------------------------------------*/
@@ -103,8 +119,6 @@ double cost(double x){return cos(x);}
 /*----------------------------------------------------------------------------*/
 int extractInt( char * msg, int * consumed )
 {
-    int x;
-
     char buf[64];
     int bufSz = 0;
 
@@ -129,8 +143,6 @@ int extractInt( char * msg, int * consumed )
 static double
 extractDouble( char * msg, int * consumed )
 {
-    int x;
-
     char buf[64];
     int bufSz = 0;
 
@@ -208,7 +220,7 @@ drawEncodedForm( char * msg )
             msg += consumed;
             //cout << "w = " << w << "\n";
             //cout << "h = " << h << "\n\n";
-            drawRectangle(w, h, x, y);
+            drawRectangle(w, h, x, y, 0.0, false);
 
             glTranslated(-x,-y,0);
 
@@ -250,14 +262,9 @@ drawAll()
 {
     glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
     glClear (GL_COLOR_BUFFER_BIT);
-    glScalef(0.05,0.05,0.05);
+    //glScalef(0.5,0.5,0.5);
 
-    drawLine(2,-2,-2,2);
-    drawCurve(0, 2*M_PI, 200, sint, cost, 3);
-
-    drawFromFile((char*)"teste.txt");
-    //const char * const str = "Mouse";
-    drawRectangle(3,3,mousex,mousey);
-
+    Field f(1.5, 1.2);
+    f.draw();
     glLoadIdentity();
 }

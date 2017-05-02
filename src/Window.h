@@ -16,7 +16,7 @@ private:
 	Display* g_pDisplay;
 	Window g_window;
 	int g_bDoubleBuffered;
-
+    int width, height;
 	XSetWindowAttributes windowAttributes;
 	XVisualInfo *visualInfo = NULL;
 	Colormap colorMap;
@@ -33,7 +33,7 @@ private:
 	void createXColorMap();
 
 public:
-	window();
+	window(int, int);
 	void initialize();
 	void open();
 	void update();
