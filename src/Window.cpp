@@ -190,8 +190,8 @@ window::initialize()
 		// Request the X window to be displayed on the screen
 		XMapWindow( g_pDisplay, g_window );
 
-		Cursor font_cursor,		/* handles for the cursors we will create.   */
-		icon_cursor;
+		Cursor font_cursor;		/* handles for the cursors we will create.   */
+		//icon_cursor;
 
 		/* create a 'watch' cursor. */
 	    font_cursor = XCreateFontCursor(g_pDisplay, XC_sailboat);

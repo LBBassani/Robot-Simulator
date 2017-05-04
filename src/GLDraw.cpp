@@ -7,6 +7,8 @@
 #include <math.h>
 #include <iostream>
 #include "Field.h"
+#include "Robot.h"
+#include "Constants.h"
 
 using namespace std;
 
@@ -71,13 +73,14 @@ drawRectangle(float w, float h, float x, float y, float theta, bool fill)
     glTranslatef(x,y, 0);
     glRotatef(180*theta/M_PI, 0,0,1);
 
-    glColor3f BLACK;
     if(fill)
     {
         glBegin(GL_QUADS);
     }
     else
     {
+
+        glColor3f BLACK;
         glBegin(GL_LINE_LOOP);
     }
 
@@ -86,6 +89,7 @@ drawRectangle(float w, float h, float x, float y, float theta, bool fill)
     glVertex3f(x2,y2,0);
     glVertex3f(x1,y2,0);
     glEnd();
+
     glPopMatrix();
 
 }
@@ -262,9 +266,19 @@ drawAll()
 {
     glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
     glClear (GL_COLOR_BUFFER_BIT);
-    //glScalef(0.5,0.5,0.5);
+    glScalef(1.2, 1.2, 1.2);
 
     Field f(1.5, 1.2);
     f.draw();
+
+    static Robot r(7.5/100, 0.2, 0.2, 0);
+
+    r.inputControls(0.002, 0.004);
+    r.evolve(TIME_STEP);
+    double front[] = {1.0, 0.07831, 0.576471};
+    double back[]  = {0.0, 0.0, 1.0};
+
+    r.draw(front, back);
+
     glLoadIdentity();
 }

@@ -4,16 +4,14 @@
 #include "WindowCallBacks.h"
 #include "GLDraw.h"
 #include <GL/glut.h>
-
-#define TIME_STEP 20
-//using namespace std;
+#include "Constants.h"
 
 /*----------------------------------------------------------------------------*/
 int
 main( int argc, char ** argv )
 {
-    double width = 600;
-    double height = 600;
+    double width = 720;
+    double height = 720;
     window *w = new window(width, height);
     glutInit( &argc, argv );
     initGl();
@@ -36,8 +34,9 @@ main( int argc, char ** argv )
 		{
 			lastTime += TIME_STEP;
 			processLogic();
+            drawAll();
 		}
-        drawAll();
+
 	}
 
     return 0;
