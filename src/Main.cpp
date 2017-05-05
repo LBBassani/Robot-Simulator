@@ -5,16 +5,26 @@
 #include "GLDraw.h"
 #include <GL/glut.h>
 #include "Constants.h"
+#include "World.h"
+#include <cmath>
 
 /*----------------------------------------------------------------------------*/
 int
 main( int argc, char ** argv )
 {
-    double width = 720;
-    double height = 720;
+    const double width = 720;
+    const double height = 720;
     window *w = new window(width, height);
     glutInit( &argc, argv );
     initGl();
+
+
+    World world;
+    for(int id = 0; id < 1; ++ id)
+    {
+        Robot r(id, ROBOTLEN, id*1e-2, id*1e-2, 0.0);
+        world.insertRobot(r);
+    }
 
     long lastTime = getCurrentTime();
     long currentTime = lastTime;
@@ -22,21 +32,14 @@ main( int argc, char ** argv )
     while(true)
 	{
         currentTime = getCurrentTime();
-		w->update();
-
-
-		if( !w->process( mouseFunc, keyPress, keyRelease ) )
-		{
-			break;
-		}
-
+		if( !w->process( mouseFunc, keyPress, keyRelease ) ) break;
 		if( ( currentTime - lastTime ) > TIME_STEP )
 		{
+            w->update();
 			lastTime += TIME_STEP;
-			processLogic();
-            drawAll();
+			processLogic(world);
+            drawAll(world);
 		}
-
 	}
 
     return 0;

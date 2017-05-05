@@ -1,4 +1,5 @@
 #include "Field.h"
+#include"GLDraw.h"
 #include <cmath>
 
 Field::Field(double xSize, double ySize, double xCenter, double yCenter)

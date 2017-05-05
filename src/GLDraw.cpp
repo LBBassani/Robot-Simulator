@@ -6,9 +6,6 @@
 #include <stdio.h>
 #include <math.h>
 #include <iostream>
-#include "Field.h"
-#include "Robot.h"
-#include "Constants.h"
 
 using namespace std;
 
@@ -262,23 +259,13 @@ void drawFromFile(char * filename)
 
 /*----------------------------------------------------------------------------*/
 void
-drawAll()
+drawAll(World &world)
 {
+
     glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
     glClear (GL_COLOR_BUFFER_BIT);
     glScalef(1.2, 1.2, 1.2);
 
-    Field f(1.5, 1.2);
-    f.draw();
-
-    static Robot r(7.5/100, 0.2, 0.2, 0);
-
-    r.inputControls(0.002, 0.004);
-    r.evolve(TIME_STEP);
-    double front[] = {1.0, 0.07831, 0.576471};
-    double back[]  = {0.0, 0.0, 1.0};
-
-    r.draw(front, back);
-
+    world.draw();
     glLoadIdentity();
 }

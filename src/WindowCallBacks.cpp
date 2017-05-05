@@ -1,19 +1,18 @@
 #include "WindowCallBacks.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "Constants.h"
 
 const int ESC_KEY = 9;
 int mousex, mousey;
 
 /*----------------------------------------------------------------------------*/
 void
-processLogic()
+processLogic(World &world)
 {
-	// Do something
+	world.inputControls(0, 0.002, 0.004);
+    world.evolve(TIME_STEP);
+
 }
-
-
 
 /*----------------------------------------------------------------------------*/
 void

@@ -6,4 +6,6 @@
 #define TIME_STEP 1/FPS
 #endif /* TIME_STEP */
 
+#define ROBOTLEN 7.5/100.0
+
 #endif /*CONSTANTS_H*/
