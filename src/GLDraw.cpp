@@ -110,6 +110,10 @@ drawCurve(float t0, float tf, int nPoints, double ( * fx )(double),
             previousT = currentT;
         }
     }
+    else
+    {
+        cout << "[WARNING] ONLY ONE POINT PROVIDED AT " << __FUNCTION__ << " CALL!";
+    }
 }
 
 double sint(double x){return sin(x);}

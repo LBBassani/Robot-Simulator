@@ -8,6 +8,7 @@ using namespace std;
 World::World()
 {
     field = Field(1.5, 1.2);
+    ball = Ball(0.0, 0.0);
 }
 
 
@@ -22,13 +23,12 @@ void
 World::draw()
 {
     field.draw();
+    ball.draw();
 
     for(auto it = robotList.begin(); it != robotList.end(); it++)
     {
-        cout << "Draw" << endl;
         it->draw();
     }
-
 }
 
 
@@ -64,7 +64,7 @@ World::inputControls(int id, double u1Value, double u2Value)
 
 
 vector<double>
-World::getState(int id, bool success)
+World::getState(int id, bool &success)
 {
     vector<double> state;
     for( auto i : robotList )
@@ -77,4 +77,20 @@ World::getState(int id, bool success)
     }
     success = false;
     return state;
+}
+
+Robot
+World::getRobot(int id, bool &success)
+{
+    Robot r = Robot(0,ROBOTLEN,0,0,0);
+    for( auto i : robotList )
+    {
+        if (i.getId() == id)
+        {
+            success = true;
+            return i;
+        }
+    }
+    success = false;
+    return r;
 }

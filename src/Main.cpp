@@ -7,6 +7,7 @@
 #include "Constants.h"
 #include "World.h"
 #include <cmath>
+#include "IndividualController.h"
 
 /*----------------------------------------------------------------------------*/
 int
@@ -20,11 +21,13 @@ main( int argc, char ** argv )
 
 
     World world;
-    for(int id = 0; id < 1; ++ id)
-    {
-        Robot r(id, ROBOTLEN, id*1e-2, id*1e-2, 0.0);
-        world.insertRobot(r);
-    }
+    int robotId = 0;
+
+    Robot r(robotId, ROBOTLEN, 0.4, -0.3, -M_PI/2);
+    world.insertRobot(r);
+    auto controller0 = IndividualController(&world, robotId);
+    double target[] = {0,0};
+    controller0.setTarget(target);
 
     long lastTime = getCurrentTime();
     long currentTime = lastTime;
@@ -33,11 +36,11 @@ main( int argc, char ** argv )
 	{
         currentTime = getCurrentTime();
 		if( !w->process( mouseFunc, keyPress, keyRelease ) ) break;
-		if( ( currentTime - lastTime ) > TIME_STEP )
+		if( ( currentTime - lastTime ) >= TIME_STEP )
 		{
             w->update();
 			lastTime += TIME_STEP;
-			processLogic(world);
+			processLogic(world, controller0);
             drawAll(world);
 		}
 	}

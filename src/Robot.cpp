@@ -82,13 +82,26 @@ Robot::evolve(double dt)
     omega = (u1 - u2)/L;
 
     auto deltaTheta = omega * dt;
+
+    theta += deltaTheta;
+
+
+    while(theta >= M_PI)
+    {
+        theta -= 2*M_PI;
+    }
+
+    while(theta < -M_PI)
+    {
+        theta += 2*M_PI;
+    }
+
     auto sincValue = sinc(0.5* deltaTheta);
 
     auto scaleFactor = dt*v*sincValue;
     x += scaleFactor*cos(theta + 0.5*deltaTheta);
     y += scaleFactor*sin(theta + 0.5*deltaTheta);
 
-    theta += deltaTheta;
     return;
 }
 
