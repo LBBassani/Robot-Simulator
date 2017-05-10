@@ -266,9 +266,10 @@ void
 drawAll(World &world)
 {
 
-    glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
     glClear (GL_COLOR_BUFFER_BIT);
-    glScalef(1.2, 1.2, 1.2);
+    glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
+
+    glScalef(1.3, 1.3, 1.3);
 
     world.draw();
     glLoadIdentity();

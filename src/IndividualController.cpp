@@ -46,15 +46,11 @@ IndividualController::computeSpeedSetPoints()
         alpha += 2*M_PI;
     }
 
-
-    cout << 180*alpha/M_PI << endl;
-
     auto distance2 = pow(deltaY, 2) + pow(deltaX, 2);
     auto rho = pow(distance2, 0.5);
-    cout << rho << "\n\n";
 
     const double kU = ROBOT_MAX_SPEED_PER_WHEEL;
-    const double kAlphaOmega = 3*ROBOT_MAX_SPEED_PER_WHEEL;
+    const double kAlphaOmega = 7*ROBOT_MAX_SPEED_PER_WHEEL;
 
 
     double vt = kU*tanh(rho*10)*cos(alpha);
@@ -84,10 +80,6 @@ IndividualController::computeSpeedSetPoints()
         uRightSetPoint *= fabs(ROBOT_MAX_SPEED_PER_WHEEL/uLeftSetPoint);
         uLeftSetPoint *= fabs(ROBOT_MAX_SPEED_PER_WHEEL/uLeftSetPoint);
     }
-
-    uRightSetPoint *= tanh(rho/(ROBOTLEN));
-    uLeftSetPoint *= tanh(rho/(ROBOTLEN));
-
 }
 
 

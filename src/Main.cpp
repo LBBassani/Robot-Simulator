@@ -7,7 +7,6 @@
 #include "Constants.h"
 #include "World.h"
 #include <cmath>
-#include "IndividualController.h"
 
 /*------------------------------------------------------------------------------------------------*/
 int
@@ -22,7 +21,7 @@ main( int argc, char ** argv )
 
     World world;
     int robotId = 0;
-    Robot * robot = new Robot(robotId, ROBOTLEN, 0.4, -0.3, -M_PI/2);
+    Robot * robot = new Robot(robotId, ROBOTLEN, 0, 0, -M_PI/2);
     world.insertRobot(robot);
 
     double lastTime = getCurrentTime();

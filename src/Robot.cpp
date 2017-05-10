@@ -4,6 +4,8 @@
 #include <GL/glut.h>
 #include <vector>
 
+//#define USING_DELAYED_MOTOR
+
 using namespace std;
 
 Robot::Robot(int idValue, double LValue, double xValue, double yValue, double thetaValue,
@@ -54,8 +56,15 @@ Robot::draw()
 void
 Robot::inputControls(double u1Value, double u2Value)
 {
+#ifdef USING_DELAYED_MOTOR
+    const double memoryFactor = 0.5;
+    u1 = u1*memoryFactor + (1-memoryFactor) * u1Value;
+    u2 = u2*memoryFactor + (1-memoryFactor) * u2Value;
+#else
     u1 = u1Value;
     u2 = u2Value;
+#endif /* USING_DELAYED_MOTOR */
+
     v = 0.5*(u1 + u2);
     omega = (u1 - u2)/L;
 }
