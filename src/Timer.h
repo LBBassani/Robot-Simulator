@@ -3,6 +3,6 @@
 
 #include <sys/time.h>
 
-long int getCurrentTime();
+double getCurrentTime();
 
 #endif

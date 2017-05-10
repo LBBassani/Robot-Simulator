@@ -9,7 +9,7 @@
 #include <cmath>
 #include "IndividualController.h"
 
-/*----------------------------------------------------------------------------*/
+/*------------------------------------------------------------------------------------------------*/
 int
 main( int argc, char ** argv )
 {
@@ -22,15 +22,11 @@ main( int argc, char ** argv )
 
     World world;
     int robotId = 0;
+    Robot * robot = new Robot(robotId, ROBOTLEN, 0.4, -0.3, -M_PI/2);
+    world.insertRobot(robot);
 
-    Robot r(robotId, ROBOTLEN, 0.4, -0.3, -M_PI/2);
-    world.insertRobot(r);
-    auto controller0 = IndividualController(&world, robotId);
-    double target[] = {0,0};
-    controller0.setTarget(target);
-
-    long lastTime = getCurrentTime();
-    long currentTime = lastTime;
+    double lastTime = getCurrentTime();
+    double currentTime = lastTime;
 
     while(true)
 	{
@@ -40,10 +36,12 @@ main( int argc, char ** argv )
 		{
             w->update();
 			lastTime += TIME_STEP;
-			processLogic(world, controller0);
+            world.evolve(TIME_STEP);
             drawAll(world);
 		}
 	}
+
+    delete robot;
 
     return 0;
 }

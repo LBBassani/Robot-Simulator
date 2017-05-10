@@ -2,6 +2,7 @@
 #define ROBOT_H
 
 #include <vector>
+#include "Constants.h"
 
 const double DEFAULT_FRONT_COLOR[] = {1.0, 0.07831, 0.576471};
 const double DEFAULT_BACK_COLOR[]  = {0.0, 0.0, 1.0};

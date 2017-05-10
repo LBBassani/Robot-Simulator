@@ -8,26 +8,9 @@ int mousex, mousey;
 
 /*----------------------------------------------------------------------------*/
 void
-processLogic(World &world, IndividualController &controller)
+processLogic()
 {
-    static int change = 0;
-    static int cnt = 0;
 
-    controller.readState();
-    if(change % 7031 == 0)
-    {
-        auto newXTarget = 0.5*sin(40*M_PI*cnt/1000.0);
-        auto newYTarget = 0.5*cos(40*M_PI*cnt/1000.0);
-        double newTarget[] = {newXTarget,newYTarget};
-        controller.setTarget(newTarget);
-
-    }
-
-    controller.setSpeeds();
-    world.evolve(TIME_STEP);
-
-    change++;
-    cnt++;
 }
 
 /*----------------------------------------------------------------------------*/

@@ -11,86 +11,64 @@ World::World()
     ball = Ball(0.0, 0.0);
 }
 
-
+/*------------------------------------------------------------------------------------------------*/
 void
-World::insertRobot(Robot r)
+World::insertRobot(Robot *controlledRobot)
 {
-    robotList.push_back(r);
+    auto controller = new IndividualController(controlledRobot);
+    robotList.push_back(controlledRobot);
+    controllerList.push_back(controller);
 }
 
 
+
+/*------------------------------------------------------------------------------------------------*/
 void
 World::draw()
 {
     field.draw();
     ball.draw();
 
-    for(auto it = robotList.begin(); it != robotList.end(); it++)
+    for(auto it = robotList.begin(); it != robotList.end(); ++it)
     {
-        it->draw();
+        (*it)->draw();
     }
 }
 
 
+
+/*------------------------------------------------------------------------------------------------*/
 void
 World::evolve(double dt)
 {
-    for(auto it = robotList.begin(); it != robotList.end(); ++it)
+    for(auto it = controllerList.begin(); it != controllerList.end(); it++)
     {
-        it->evolve(dt);
+        (*it)->setSpeeds();
     }
-}
-
-void
-World::inputControls(int id, double u1Value, double u2Value)
-{
-    bool success = false;
 
     for(auto it = robotList.begin(); it != robotList.end(); ++it)
     {
-        if(it->getId() == id)
-        {
-            success = true;
-            it->inputControls(u1Value, u2Value);
-        }
+        (*it)->evolve(dt);
     }
-
-    if(!success)
-    {
-        cout << "[WARNING] robot with id " << id << " not found" << endl;
-    }
-
 }
 
 
-vector<double>
-World::getState(int id, bool &success)
-{
-    vector<double> state;
-    for( auto i : robotList )
-    {
-        if (i.getId() == id)
-        {
-            success = true;
-            return i.getState();
-        }
-    }
-    success = false;
-    return state;
-}
 
-Robot
+/*------------------------------------------------------------------------------------------------*/
+Robot *
 World::getRobot(int id, bool &success)
 {
-    Robot r = Robot(0,ROBOTLEN,0,0,0);
-    for( auto i : robotList )
+    Robot * r = new Robot(0,ROBOTLEN,0,0,0);
+
+    for(auto it = robotList.begin(); it != robotList.end(); ++it)
     {
-        if (i.getId() == id)
+        if ((*it)->getId() == id)
         {
             success = true;
-            return i;
+            return *it;
         }
     }
+
     success = false;
     return r;
 }

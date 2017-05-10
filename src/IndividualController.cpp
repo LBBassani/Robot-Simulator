@@ -1,12 +1,14 @@
 #include "IndividualController.h"
 #include <cmath>
 #include <iostream>
-//using namespace std;
 
-IndividualController::IndividualController(World *worldData, int idValue)
+using namespace std;
+
+IndividualController::IndividualController(Robot *r)
 {
-    world = worldData;
-    controledPlayerId = idValue;
+    controlledRobot = r;
+    double target[] = {0,0};
+    setTarget(target);
 }
 
 
@@ -16,36 +18,19 @@ IndividualController::setTarget(double *target)
 {
     xTarget = target[0];
     yTarget = target[1];
-    //thetaTarget = target[2];
 }
-
-
-/*------------------------------------------------------------------------------------------------*/
-void
-IndividualController::readState()
-{
-    bool success = false;
-    auto robot = world->getRobot(controledPlayerId, success);
-
-    if(success)
-    {
-        auto state = robot.getState();
-        currentX = state[0];
-        currentY = state[1];
-        currentTheta = state[2];
-    }
-    else
-    {
-        cout << "[WARNING] id " <<  controledPlayerId << " not found" << endl;
-    }
-}
-
 
 
 /*------------------------------------------------------------------------------------------------*/
 void
 IndividualController::computeSpeedSetPoints()
 {
+    vector<double> position = controlledRobot->getState();
+
+    currentX = position[0];
+    currentY = position[1];
+    currentTheta = position[2];
+
     auto deltaY = yTarget - currentY;
     auto deltaX = xTarget - currentX;
 
@@ -69,7 +54,7 @@ IndividualController::computeSpeedSetPoints()
     cout << rho << "\n\n";
 
     const double kU = ROBOT_MAX_SPEED_PER_WHEEL;
-    const double kAlphaOmega = ROBOT_MAX_SPEED_PER_WHEEL*10;
+    const double kAlphaOmega = 3*ROBOT_MAX_SPEED_PER_WHEEL;
 
 
     double vt = kU*tanh(rho*10)*cos(alpha);
@@ -100,8 +85,8 @@ IndividualController::computeSpeedSetPoints()
         uLeftSetPoint *= fabs(ROBOT_MAX_SPEED_PER_WHEEL/uLeftSetPoint);
     }
 
-    uRightSetPoint *= tanh(rho/(5*ROBOTLEN));
-    uLeftSetPoint *= tanh(rho/(5*ROBOTLEN));
+    uRightSetPoint *= tanh(rho/(ROBOTLEN));
+    uLeftSetPoint *= tanh(rho/(ROBOTLEN));
 
 }
 
@@ -112,5 +97,5 @@ void
 IndividualController::setSpeeds()
 {
     computeSpeedSetPoints();
-    world->inputControls(controledPlayerId, uRightSetPoint, uLeftSetPoint);
+    controlledRobot->inputControls(uRightSetPoint, uLeftSetPoint);
 }

@@ -1,22 +1,23 @@
 #ifndef INDIVIDUAL_CONTROLER_H
 #define INDIVIDUAL_CONTROLER_H
 
-#include "World.h"
+#include "Robot.h"
 
 class IndividualController
 {
 private:
-    World *world;
+    Robot * controlledRobot;
+
     int controledPlayerId;
     double xTarget, yTarget, thetaTarget;
     double currentX, currentY, currentTheta;
     double uRightSetPoint;
     double uLeftSetPoint;
     void computeSpeedSetPoints();
+
 public:
-    IndividualController(World *worldData, int id);
+    IndividualController(Robot *controlledRobot);
     void setTarget(double *target);
-    void readState();
     void setSpeeds();
 };
 

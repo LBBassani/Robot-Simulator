@@ -1,6 +1,6 @@
-CC			    = clang++
+CC			    = g++
 RM			    = rm -f
-CPPFLAGS		= -Wall -std=c++11 #-DDEBUG -DKEY_AND_MOUSE_EVENT_VERBOSE
+CPPFLAGS		= -Wall -std=c++11 -g #-DDEBUG -DKEY_AND_MOUSE_EVENT_VERBOSE
 
 LDDFLAGS		= -lglut -lGL -lX11 -lGLU -lm
 SRCEXT := cpp

@@ -1,6 +1,6 @@
 #include "Timer.h"
 
-long int getCurrentTime(){
+double getCurrentTime(){
     struct timeval now;
     long int seconds, useconds;
 
@@ -8,5 +8,5 @@ long int getCurrentTime(){
 
     seconds  = now.tv_sec;
     useconds = now.tv_usec;
-    return ( seconds * 1000 + useconds/1000.0 ) + 0.5;
+    return ( seconds + useconds/1e6 );
 }

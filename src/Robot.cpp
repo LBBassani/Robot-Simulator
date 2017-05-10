@@ -60,16 +60,16 @@ Robot::inputControls(double u1Value, double u2Value)
     omega = (u1 - u2)/L;
 }
 
-static double sinc(double x)
+double sinct(double x) // This sin(x)/x can avoid zero division by taylor series
 {
-    if (fabs(x) < 1e-3)
+    if (fabs(x) < 1e-2)
     {
         auto x2 = x*x;
         return 1 - x2/6 + x2*x2/120; // taylor series aproximation
     }
     else
     {
-        return sinl(x)/x;
+        return sin(x)/x;
     }
 }
 
@@ -96,9 +96,10 @@ Robot::evolve(double dt)
         theta += 2*M_PI;
     }
 
-    auto sincValue = sinc(0.5* deltaTheta);
+    auto sincValue = sinct(0.5* deltaTheta);
 
     auto scaleFactor = dt*v*sincValue;
+
     x += scaleFactor*cos(theta + 0.5*deltaTheta);
     y += scaleFactor*sin(theta + 0.5*deltaTheta);
 
