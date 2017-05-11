@@ -58,12 +58,12 @@ IndividualController::computeSpeedSetPoints()
 
     if( rho > 1e-5 )
     {
-        omega = kAlphaOmega*alpha + kU * (tanh(rho)/rho) * sin(alpha) * cos(alpha);
+        omega = kAlphaOmega*alpha + kU * (tanh(rho)/rho) * sin(2*alpha)/2;
     }
     else
     {
         auto rho2 = rho*rho;
-        omega = kAlphaOmega*alpha + kU * (1 - rho2/3 + 2*rho2*rho2/15 ) * sin(alpha) * cos(alpha);
+        omega = kAlphaOmega*alpha + kU * (1 - rho2/3 + 2*rho2*rho2/15 ) * sin(2*alpha)/2;
     }
 
     uRightSetPoint = (vt + omega*ROBOTLEN);

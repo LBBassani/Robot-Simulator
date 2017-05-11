@@ -46,7 +46,7 @@ World::evolve(double dt)
 
     for(auto it = controllerList.begin(); it != controllerList.end(); it++)
     {
-        double target[] = {0.4*cos(elapsedTime), 0.4*sin(2*elapsedTime)};
+        double target[] = {0.4*cos(0.5*elapsedTime), 0.4*sin(elapsedTime)};
         (*it)->setTarget(target);
         (*it)->setSpeeds();
     }
