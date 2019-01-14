@@ -1,0 +1,4 @@
+See file:///home/thaylo/Projects/Robot-Simulator/build/tmp/compileMainTestGoogleTestExeMainCpp/output.txt for all output for compileMainTestGoogleTestExeMainCpp.
+compiling Main.cpp successful.
+
+Finished compileMainTestGoogleTestExeMainCpp, see full log file:///home/thaylo/Projects/Robot-Simulator/build/tmp/compileMainTestGoogleTestExeMainCpp/output.txt.

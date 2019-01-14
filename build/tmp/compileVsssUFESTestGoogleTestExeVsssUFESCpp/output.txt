@@ -1,0 +1,22 @@
+See file:///home/thaylo/Projects/Robot-Simulator/build/tmp/compileVsssUFESTestGoogleTestExeVsssUFESCpp/output.txt for all output for compileVsssUFESTestGoogleTestExeVsssUFESCpp.
+compiling Ball.cpp successful.
+
+compiling IndividualController.cpp successful.
+
+compiling World.cpp successful.
+
+compiling Field.cpp successful.
+
+compiling GLDraw.cpp successful.
+
+compiling Timer.cpp successful.
+
+compiling Robot.cpp successful.
+
+compiling WindowCallBacks.cpp successful.
+
+compiling VsssUFES.cpp successful.
+
+compiling Window.cpp successful.
+
+Finished compileVsssUFESTestGoogleTestExeVsssUFESCpp, see full log file:///home/thaylo/Projects/Robot-Simulator/build/tmp/compileVsssUFESTestGoogleTestExeVsssUFESCpp/output.txt.

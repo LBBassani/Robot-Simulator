@@ -7,11 +7,16 @@
 #include "Constants.h"
 #include "World.h"
 #include <cmath>
+#include "VsssUFES.h"
+
 
 /*------------------------------------------------------------------------------------------------*/
 int
 main( int argc, char ** argv )
 {
+    VsssUFES g("Gradle User");
+    g.greet();
+
     const double width = 720;
     const double height = 720;
     window *w = new window(width, height);
