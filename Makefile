@@ -13,8 +13,9 @@ TARGET := bin/wcg
 all: ${TARGET}
 
 clean:
-	rm $(OBJECTS)
-	rm $(TARGET)
+	-rm $(OBJECTS)
+	-rm $(TARGET)
+	./gradlew clean
 
 %.o: %.cpp
 	$(CC) -c $< $(CPPFLAGS)
