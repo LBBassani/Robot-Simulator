@@ -16,6 +16,7 @@ clean:
 	-rm $(OBJECTS)
 	-rm $(TARGET)
 	./gradlew clean
+	-rm gradle -rf
 
 %.o: %.cpp
 	$(CC) -c $< $(CPPFLAGS)
