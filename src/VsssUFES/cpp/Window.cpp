@@ -175,7 +175,7 @@ window::initialize()
 								CWBorderPixel | CWColormap | CWEventMask,
 								&windowAttributes );
 
-		const char * const name = "Warehouse Computer Graphics";
+		const char * const name = "Robot Simulator";
 		XSetStandardProperties( g_pDisplay, g_window,
 								name,
 								name,
