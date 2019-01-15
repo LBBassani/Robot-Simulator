@@ -40,6 +40,7 @@ if [ $ALL_DEPENDENCIES_MET -eq 1 ]; then
 fi
 echo "Creating a local gradlew to use instead of gradle."
 gradle wrapper
+mkdir 3rdparty
 cd 3rdparty
 if [ ! -d "$GOOGLE_TEST_DIR" ]; then
     echo "${YELLOW}[WARNING]${NC} Googletest library was not detected, cloning repo."
