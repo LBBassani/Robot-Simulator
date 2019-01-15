@@ -8,13 +8,13 @@ RED='\033[1;31m'
 NC='\033[0m' # No Color
 
 GOOGLE_TEST_DIR="googletest-master"
-DEPENDENCY_LIST="libgl1-mesa-dev freeglut3-dev cmake git"
+DEPENDENCY_LIST="libgl1-mesa-dev freeglut3-dev cmake git libglfw3-dev"
 ALL_DEPENDENCIES_MET=1
 echo "${GREEN}[Optimization]${NC} Checking for installed libraries"
 
 for i in $DEPENDENCY_LIST; do
     if [ $(dpkg -s $i 2>/dev/null | grep -c "install ok installed") -eq 0 ]; then
-        echo "${YELLOW}[WARNING]${NC} The package $i was not detected."
+        echo "${YELLOW}[WARNING]${NC} The package ${SOFTGREEN}$i${NC} was not detected."
         echo "${YELLOW}[WARNING]${NC} A package list update was scheduled."
         ALL_DEPENDENCIES_MET=0
         break
@@ -38,7 +38,8 @@ if [ $ALL_DEPENDENCIES_MET -eq 1 ]; then
         fi
     done
 fi
-
+echo "Creating a local gradlew to use instead of gradle."
+gradle wrapper
 cd 3rdparty
 if [ ! -d "$GOOGLE_TEST_DIR" ]; then
     echo "${YELLOW}[WARNING]${NC} Googletest library was not detected, cloning repo."
@@ -46,7 +47,17 @@ if [ ! -d "$GOOGLE_TEST_DIR" ]; then
 else
     echo "${GREEN}[SUCCESS]${NC} Googletest library detected, download avoided."
 fi
+cd ..
+echo "Listing all available tasks:"
+./gradlew tasks
 
+cd 3rdparty
 cd googletest-master
 rm build -i -rf
+cd googletest
+rm build -i -rf
 mkdir build
+cd build
+cmake ..
+make
+cp lib/* .

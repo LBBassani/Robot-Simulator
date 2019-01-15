@@ -37,6 +37,12 @@ model {
                 linker.args '-pthread'
             }
         }
+        all {
+            if (toolChain in Gcc) {
+                cppCompiler.args "-c",  "-g"
+                linker.args "-lm", "-lX11", "-lglut", "-lGLU", "-lGL", "-pthread"
+            }
+        }
     }
 }
 
