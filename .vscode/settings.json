@@ -1,0 +1,40 @@
+{
+    "files.exclude": {
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.gradle": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/.vscode": true,
+        "**/*.o": true,
+        "**/CVS": true,
+        "**/gradle": true
+    },
+    "breadcrumbs.enabled": true,
+    "window.zoomLevel": 0,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "workbench.colorTheme": "Dracula",
+    "macros": {
+        "showFileAndFocus": [
+            "workbench.files.action.showActiveFileInExplorer",
+            "workbench.files.action.focusFilesExplorer"
+        ]
+    },
+    // Set the default
+    "editor.formatOnSave": false,
+    // Enable per-language
+    "[javascript]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true
+    },
+    "saveBackup.conf.backupDir":"/home/thaylo/Documents/saveBackup",
+    "editor.minimap.enabled": false,
+    "files.trimTrailingWhitespace": true,
+    "editor.detectIndentation": true,
+    "editor.quickSuggestionsDelay": 0,
+    "editor.fontFamily": "Fira Code",
+    "editor.fontSize": 16,
+    "editor.fontLigatures": true,
+    "window.titleBarStyle": "custom"
+}
