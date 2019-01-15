@@ -1,8 +1,0 @@
-See file:///home/thaylo/Projects/Robot-Simulator/build/tmp/compileVsssUFESTestGoogleTestExeVsssUFESTestCpp/output.txt for all output for compileVsssUFESTestGoogleTestExeVsssUFESTestCpp.
-compiling VsssUFESTest.cpp failed.
-/home/thaylo/Projects/Robot-Simulator/src/VsssUFESTest/cpp/VsssUFESTest.cpp:1:25: fatal error: gtest/gtest.h: No such file or directory
- #include <gtest/gtest.h>
-                         ^
-compilation terminated.
-
-Finished compileVsssUFESTestGoogleTestExeVsssUFESTestCpp, see full log file:///home/thaylo/Projects/Robot-Simulator/build/tmp/compileVsssUFESTestGoogleTestExeVsssUFESTestCpp/output.txt.
