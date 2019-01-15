@@ -8,7 +8,7 @@ RED='\033[1;31m'
 NC='\033[0m' # No Color
 
 GOOGLE_TEST_DIR="googletest-master"
-DEPENDENCY_LIST="libgl1-mesa-dev freeglut3-dev cmake git libglfw3-dev"
+DEPENDENCY_LIST="libgl1-mesa-dev freeglut3-dev cmake git"
 ALL_DEPENDENCIES_MET=1
 echo "${GREEN}[Optimization]${NC} Checking for installed libraries"
 
@@ -61,3 +61,8 @@ cd build
 cmake ..
 make
 cp lib/* .
+cd ..
+cd ..
+cd ..
+cd ..
+./gradlew check
