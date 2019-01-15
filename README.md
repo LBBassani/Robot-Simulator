@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-The automatic provisioning script was tested on an Intel® Core™ i7 machine running the Debian 9 Unix distribution. By now, there is no need for GPUs or any kind of additional computing device.
+The automatic provisioning script was tested on an Intel® Core™ i7 machine running the Debian 9 Linux distribution. By now, there is no need for GPUs or any kind of additional computing device.
 
 * [Debian 9](https://www.debian.org/index.html) - The Linux distro used;
 * [Git](https://git-scm.com/doc) - The version control system used.
