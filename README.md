@@ -45,6 +45,9 @@ To run example simulation, run:
 ```
 ./build/install/mainTest/mainTest
 ```
+A new window will open up like this:
+
+![Alt text](/images/player_on_field.png?raw=true "Title")
 
 ## Running the tests
 
