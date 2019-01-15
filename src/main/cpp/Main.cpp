@@ -19,6 +19,8 @@ main( int argc, char ** argv )
 
     const double width = 720;
     const double height = 720;
+    const int simulationMaxSteps = 60*5;
+    int stepCounter = 0;
     window *w = new window(width, height);
     glutInit( &argc, argv );
     initGl();
@@ -36,8 +38,10 @@ main( int argc, char ** argv )
 	{
         currentTime = getCurrentTime();
 		if( !w->process( mouseFunc, keyPress, keyRelease ) ) break;
+
 		if( ( currentTime - lastTime ) >= TIME_STEP )
 		{
+            if(stepCounter++ >= simulationMaxSteps) break;
             w->update();
 			lastTime += TIME_STEP;
             world.evolve(TIME_STEP);
