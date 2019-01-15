@@ -5,3 +5,6 @@
 !/.gitignore
 .*
 bin/*
+build
+3rdparty
+!3rdparty/gitkeep
