@@ -9,7 +9,7 @@
 #include <cmath>
 #include "VsssUFES.h"
 
-
+using namespace std;
 /*------------------------------------------------------------------------------------------------*/
 int
 main( int argc, char ** argv )
@@ -19,7 +19,7 @@ main( int argc, char ** argv )
 
     const double width = 720;
     const double height = 720;
-    const int simulationMaxSteps = 60*5;
+    const int simulationMaxSteps = 60*15;
     int stepCounter = 0;
     window *w = new window(width, height);
     glutInit( &argc, argv );
@@ -28,8 +28,15 @@ main( int argc, char ** argv )
 
     World world;
     int robotId = 0;
-    Robot * robot = new Robot(robotId, ROBOTLEN, 0, 0, -M_PI/2);
-    world.insertRobot(robot);
+
+    for(float theta = 0; theta < 2*M_PI; theta += (2*M_PI/10))
+    {
+        for(float r = 0; r < 1.2/2; r += ((1.2/2)/4))
+        {
+            Robot * robot = new Robot(robotId++, ROBOTLEN, r*cos(theta), r*sin(theta), -M_PI/2);
+            world.insertRobot(robot);
+        }
+    }
 
     double lastTime = getCurrentTime();
     double currentTime = lastTime;
@@ -48,8 +55,6 @@ main( int argc, char ** argv )
             drawAll(world);
 		}
 	}
-
-    delete robot;
 
     return 0;
 }

@@ -57,8 +57,9 @@ Robot::draw()
 void
 Robot::inputControls(double u1Value, double u2Value)
 {
+#define USING_DELAYED_MOTOR
 #ifdef USING_DELAYED_MOTOR
-    const double memoryFactor = 0.9;
+    const double memoryFactor = 0.8;
     u1 = u1*memoryFactor + (1-memoryFactor) * u1Value;
     u2 = u2*memoryFactor + (1-memoryFactor) * u2Value;
 #else
