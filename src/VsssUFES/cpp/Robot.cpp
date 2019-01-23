@@ -16,6 +16,7 @@ Robot::Robot(int idValue, double LValue, double xValue, double yValue, double th
     x = xValue;
     y = yValue;
     theta = thetaValue;
+    u1 = u2 = 0;
 
     if(customColors)
     {
@@ -57,7 +58,7 @@ void
 Robot::inputControls(double u1Value, double u2Value)
 {
 #ifdef USING_DELAYED_MOTOR
-    const double memoryFactor = 0.5;
+    const double memoryFactor = 0.9;
     u1 = u1*memoryFactor + (1-memoryFactor) * u1Value;
     u2 = u2*memoryFactor + (1-memoryFactor) * u2Value;
 #else
