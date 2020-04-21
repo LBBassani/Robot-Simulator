@@ -8,7 +8,7 @@ RED='\033[1;31m'
 NC='\033[0m' # No Color
 
 GOOGLE_TEST_DIR="googletest-master"
-DEPENDENCY_LIST="libgl1-mesa-dev freeglut3-dev cmake git"
+DEPENDENCY_LIST="libgl1-mesa-dev freeglut3-dev cmake git openjdk-8-jdk unzip"
 ALL_DEPENDENCIES_MET=1
 echo "${GREEN}[Optimization]${NC} Checking for installed libraries"
 
@@ -38,6 +38,22 @@ if [ $ALL_DEPENDENCIES_MET -eq 1 ]; then
         fi
     done
 fi
+
+if [ ! -d "/opt/gradle/gradle-6.3" ]
+then
+    echo "Obtaining gradle 6.3..."
+    wget https://services.gradle.org/distributions/gradle-6.3-bin.zip
+    sudo unzip -d /opt/gradle gradle-6.3-bin.zip
+    echo "${GREEN}[SUCCESS]${NC} Gradle downloaded."
+else
+    echo "${GREEN}[SUCCESS]${NC} Gradle detected, download avoided."
+fi
+
+export GRADLE_HOME=/opt/gradle/gradle-6.3
+export PATH=${GRADLE_HOME}/bin:${PATH}
+
+gradle -v
+
 echo "Creating a local gradlew to use instead of gradle."
 gradle wrapper
 cd 3rdparty
