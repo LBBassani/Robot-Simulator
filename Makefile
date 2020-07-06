@@ -2,7 +2,7 @@ CC			    = g++
 RM			    = rm -f
 CPPFLAGS		= -Wall -std=c++11 -g #-DDEBUG -DKEY_AND_MOUSE_EVENT_VERBOSE
 
-LDDFLAGS		= -lglut -lGL -lX11 -lGLU -lm
+LDDFLAGS		= -lglut -lGL -lX11 -lGLU -lm -ljsoncpp
 SRCEXT := cpp
 SOURCESDIR = src
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))

@@ -23,6 +23,8 @@ void test(int, char **);
 
 void server(int, char **);
 
+void echoserver(int, char **);
+
 void error(const char *msg)
 {
     perror(msg);
@@ -34,12 +36,55 @@ int main( int argc, char ** argv ){
 
     if (argc > 1){
         if(!strcmp(argv[1], "--test")) test(argc, argv);
+        if(!strcmp(argv[1], "--echo-server")) echoserver(argc, argv);
         if(!strcmp(argv[1], "--start-server")) server(argc, argv);
     }
     return 0;
 }
 
 void server(int argc, char ** argv){
+  std::cout << "running....\n";
+  int port = 40003;
+  if (argc > 2) port = (atoi(argv[2]));
+
+  try{
+    ServerSocket server(port);
+    // Create the socket
+
+    while ( true ){
+
+      ServerSocket new_sock;
+      server.accept ( new_sock );
+
+      try{
+          while ( true ){
+            // Recebe dados pela porta
+            std::string data;
+            new_sock >> data;
+
+            Json::Reader reader;
+            Json::Value obj;
+            reader.parse(data, obj);
+            std::cout << obj["method"] << endl;
+            
+            // Responde a requisição
+            Json::Value resp;
+            resp["result"] = obj["method"];
+            Json::FastWriter fastWriter;
+            std::string response = fastWriter.write(resp);
+            new_sock << response;
+          }
+        }
+      catch ( SocketException& ) {}
+
+	  } 
+  } catch ( SocketException& e ){
+      std::cout << "Exception was caught:" << e.description() << "\nExiting.\n";
+  }
+
+}
+
+void echoserver(int argc, char ** argv){
   std::cout << "running....\n";
   int port = 30000;
   if (argc > 2) port = (atoi(argv[2]));

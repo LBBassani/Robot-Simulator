@@ -36,8 +36,13 @@ make
 To run example simulation, run:
 
 ```
-./bin/erusvsssim
+./bin/erusvsssim --test
 ```
+To run a simple echo server, run:
+```
+./bin/erusvsssim --echo-server port(=30000)
+```
+
 A new window will open up like this:
 
 ![Simulator Window](/images/player_on_field.png?raw=true "Title")
