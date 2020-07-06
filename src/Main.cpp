@@ -7,14 +7,24 @@
 #include "Constants.h"
 #include "World.h"
 #include <cmath>
+#include <string.h>
 #include "VsssUFES.h"
 
 using namespace std;
 /*------------------------------------------------------------------------------------------------*/
-int
-main( int argc, char ** argv )
-{
-    VsssUFES g("Gradle User");
+
+void test(int, char **);
+
+int main( int argc, char ** argv ){
+
+    if (argc > 1){
+        if(!strcmp(argv[1], "--test")) test(argc, argv);    
+    }
+    return 0;
+}
+
+void test( int argc, char ** argv){
+    VsssUFES g("Test User");
     g.greet();
 
     const double width = 720;
@@ -55,6 +65,4 @@ main( int argc, char ** argv )
             drawAll(world);
 		}
 	}
-
-    return 0;
 }
