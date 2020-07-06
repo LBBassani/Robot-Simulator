@@ -12,6 +12,7 @@
 
 #include <jsoncpp/json/json.h>
 #include <sys/socket.h>
+#include <sstream>
 
 #include "ServerSocket.h"
 #include "SocketException.h"
@@ -61,18 +62,38 @@ void server(int argc, char ** argv){
             // Recebe dados pela porta
             std::string header, data;
             new_sock >> header;
-            new_sock >> data;
-            std::cout << header << endl << data << endl;
+            // Quebra o header para ter as informações
+            std::vector<std::string> headerwords;
+            std::istringstream iss (header) ;
+            for(std::string s; iss >> s; )
+              headerwords.push_back(s);
 
-            /* Json::Reader reader;
-            Json::Value obj;
-            reader.parse(data, obj);
-            std::cout << obj["method"] << endl; */
-            
+            // Se o método for post ou put, recebe corpo
+            if (!headerwords[0].compare("POST") || !headerwords[0].compare("PUT"))
+              new_sock >> data;
+              Json::Reader reader;
+              Json::Value obj;
+              reader.parse(data, obj);
+              std::cout << headerwords[0] << endl << data << endl;
+              
+              // monta a resposta
+              Json::Value resp;
+              Json::FastWriter fastWriter;
+              resp["result"] = obj["method"];
+              resp["id"] = obj["id"];
+              std::string response = fastWriter.write(resp);
+              std::vector<std::string> responsehearder;
+
+              responsehearder.push_back("HTTP/1.1");
+              responsehearder.push_back("200");
+              responsehearder.push_back("OK\n");
+              responsehearder.push_back("Content-Type: application/json\n");
+              responsehearder.push_back("Content-Length:");
+
             // Responde a requisição
             /* Json::Value resp;
             resp["result"] = obj["method"];
-            Json::FastWriter fastWriter;
+            ;
             std::string response = fastWriter.write(resp);
             new_sock << response; */
           }
