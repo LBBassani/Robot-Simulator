@@ -59,20 +59,22 @@ void server(int argc, char ** argv){
       try{
           while ( true ){
             // Recebe dados pela porta
-            std::string data;
+            std::string header, data;
+            new_sock >> header;
             new_sock >> data;
+            std::cout << header << endl << data << endl;
 
-            Json::Reader reader;
+            /* Json::Reader reader;
             Json::Value obj;
             reader.parse(data, obj);
-            std::cout << obj["method"] << endl;
+            std::cout << obj["method"] << endl; */
             
             // Responde a requisição
-            Json::Value resp;
+            /* Json::Value resp;
             resp["result"] = obj["method"];
             Json::FastWriter fastWriter;
             std::string response = fastWriter.write(resp);
-            new_sock << response;
+            new_sock << response; */
           }
         }
       catch ( SocketException& ) {}
