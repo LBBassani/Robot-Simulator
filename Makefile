@@ -8,7 +8,7 @@ SOURCESDIR = src
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%, $(SRCDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 
-TARGET := bin/wcg
+TARGET := bin/erusvsssim
 
 all: ${TARGET}
 

@@ -26,44 +26,22 @@ sudo apt upgrade -y
 Get the sources:
 ```
 cd /your/prefered/working/directory/
-git clone https://github.com/Thaylo/Robot-Simulator.git
+git clone https://github.com/LBBassani/Robot-Simulator.git
 ```
-
-Now the aforementioned automatic provisioning script kicks-in (requires root password):
+Compile the project:
 ```
-sh provisioning.sh
+make
 ```
-Several success messages are expected to be displayed, ending with something like this:
-```
-BUILD SUCCESSFUL in 0s
-11 actionable tasks: 11 up-to-date
-```
-This indicates that all Gradle tasks were executed and googletest library is correctly setup.
 
 To run example simulation, run:
 
 ```
-./build/install/mainTest/mainTest
+./bin/erusvsssim
 ```
 A new window will open up like this:
 
-![Alt text](/images/player_on_field.png?raw=true "Title")
+![Simulator Window](/images/player_on_field.png?raw=true "Title")
 
-## Running the tests
-
-To run the automated tests:
-```
-./gradlew build
-```
-
-## Deployment
-
-Only the previous mode of installation is available. In the future, this project will be able to run containerized on high disponibility cloud clusters, preferably using a provider-agnostic technology (Kubernetes is a preferable choice).
-
-## Built With
-
-* [Googletest](https://github.com/google/googletest) - The Google's C++ test framework
-* [Gradle](https://gradle.org/) - An open-source build automation tool
 
 ## Authors
 
