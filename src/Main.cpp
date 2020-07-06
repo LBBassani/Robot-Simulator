@@ -10,17 +10,63 @@
 #include <string.h>
 #include "VsssUFES.h"
 
+#include <jsoncpp/json/json.h>
+#include <sys/socket.h>
+
+#include "ServerSocket.h"
+#include "SocketException.h"
+
 using namespace std;
 /*------------------------------------------------------------------------------------------------*/
 
 void test(int, char **);
 
+void server(int, char **);
+
+void error(const char *msg)
+{
+    perror(msg);
+    exit(1);
+};
+
+
 int main( int argc, char ** argv ){
 
     if (argc > 1){
-        if(!strcmp(argv[1], "--test")) test(argc, argv);    
+        if(!strcmp(argv[1], "--test")) test(argc, argv);
+        if(!strcmp(argv[1], "--start-server")) server(argc, argv);
     }
     return 0;
+}
+
+void server(int argc, char ** argv){
+  std::cout << "running....\n";
+  int port = 30000;
+  if (argc > 2) port = (atoi(argv[2]));
+
+  try{
+    ServerSocket server(port);
+    // Create the socket
+
+    while ( true ){
+
+      ServerSocket new_sock;
+      server.accept ( new_sock );
+
+      try{
+          while ( true ){
+            std::string data;
+            new_sock >> data;
+            new_sock << data;
+          }
+        }
+      catch ( SocketException& ) {}
+
+	  } 
+  } catch ( SocketException& e ){
+      std::cout << "Exception was caught:" << e.description() << "\nExiting.\n";
+  }
+
 }
 
 void test( int argc, char ** argv){
